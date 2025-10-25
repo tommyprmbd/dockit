@@ -1,4 +1,6 @@
-# 🧩 Dev Environment Docker Stack
+# 🐳 Dockit
+
+> A unified local development stack for modern backend developers.
 
 ## 📘 Version
 v1.0.0
@@ -14,13 +16,13 @@ Includes MySQL 8.2.0, PostgreSQL 15, Redis 7, and Keycloak 26 — all managed th
 
 ## 📁 Folder Structure
 ```
-DevEnv/
-├── config              # Configuration files for each service 
-├── data                # Persistent data volumes
-├── .env                # All environment variables (ports, credentials, etc)
-├── docker-compose.yml  # Docker service configuration
-├── manage.sh           # Interactive container manager
-└── README.md           # Project documentation
+dockit/
+├── config/            # Service configurations
+├── data/             # Persistent data volumes
+├── .env              # Environment variables and ports
+├── docker-compose.yml # Service definitions
+├── dockit.sh         # Interactive CLI manager
+└── README.md         # Documentation
 ```
 
 ---
@@ -44,8 +46,8 @@ KEYCLOAK_PORT=8083
 Use the interactive script:
 
 ```bash
-chmod +x manage.sh
-./manage.sh
+chmod +x dockit.sh
+./dockit.sh
 ```
 
 You’ll see menu options:
@@ -64,22 +66,22 @@ You’ll see menu options:
 
 **Start all containers:**
 ```bash
-./manage.sh → option 2 → all
+./dockit.sh → option 2 → all
 ```
 
 **Start only MySQL & Redis:**
 ```bash
-./manage.sh → option 2 → mysql redis
+./dockit.sh → option 2 → mysql redis
 ```
 
 **View container logs:**
 ```bash
-./manage.sh → option 5 → mysql-dev
+./dockit.sh → option 5 → mysql-dev
 ```
 
 **Stop everything:**
 ```bash
-./manage.sh → option 3
+./dockit.sh → option 3
 ```
 
 ---
