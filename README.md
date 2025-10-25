@@ -4,7 +4,7 @@
 v1.0.0
 
 ## 👨‍💻 Developer / Contributors
-- **Maintainer:** Tommyprmbd (Senior DevOps)
+- **Maintainer:** Tommyprmbd
 
 ## 🧱 Project Overview
 Reusable local development environment built with Docker Compose.  
@@ -106,4 +106,4 @@ Here is a summary of tasks currently being worked on for this repository:
 
 
 ## 🧩 License
-MIT License © 2025 Tommyprmbd (SALT)
+MIT License © 2025 Tommyprmbd
