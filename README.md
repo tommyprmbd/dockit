@@ -10,7 +10,7 @@ v1.0.0
 
 ## 🧱 Project Overview
 Reusable local development environment built with Docker Compose.  
-Includes MySQL 8.2.0, PostgreSQL 15, Redis 7, and Keycloak 26 — all managed through a single `manage.sh` interactive CLI.
+Includes MySQL 8.2.0, PostgreSQL 15, Redis 7, Keycloak 26, and a FrankenPHP runtime — all managed through the `dockit.sh` interactive CLI.
 
 ---
 
@@ -40,7 +40,11 @@ MYSQL_PORT=8080
 POSTGRES_PORT=8081
 REDIS_PORT=8082
 KEYCLOAK_PORT=8083
+FRANKENPHP_HTTP_PORT=8084
+FRANKENPHP_PROJECT_PATH=../playground/php
+FRANKENPHP_DOCUMENT_ROOT=public
 ```
+Adjust `FRANKENPHP_PROJECT_PATH` to point at your local PHP application (e.g. a Laravel project).
 
 ### 3️⃣ Manage Containers
 Use the interactive script:
@@ -74,6 +78,11 @@ You’ll see menu options:
 ./dockit.sh → option 2 → mysql redis
 ```
 
+**Serve a PHP app with FrankenPHP:**
+```bash
+./dockit.sh → option 2 → frankenphp
+```
+
 **View container logs:**
 ```bash
 ./dockit.sh → option 5 → mysql-dev
@@ -89,6 +98,7 @@ You’ll see menu options:
 ## 📊 Notes
 - All ports are in the 808x range to prevent conflicts.
 - Data is persisted in Docker volumes (`mysql_data`, `postgres_data`, etc.).
+- FrankenPHP mounts your application from `FRANKENPHP_PROJECT_PATH` and uses `FRANKENPHP_DOCUMENT_ROOT` for serving public files.
 - Each service is isolated under the `devnet` network.
 - You can safely extend this setup with additional services like **Mailpit**, **Adminer**, or **MinIO**.
 

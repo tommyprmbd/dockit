@@ -31,11 +31,12 @@ show_menu() {
 build_containers() {
   echo "🚧 Pulling & building containers..."
   docker compose --env-file .env pull
+  docker compose --env-file .env build
   echo "✅ Build completed."
 }
 
 start_containers() {
-  echo "Available services: mysql postgres redis keycloak"
+  echo "Available services: mysql postgres redis keycloak frankenphp"
   read -p "Enter service(s) to start (space-separated or 'all'): " SERVICES
   if [ "$SERVICES" == "all" ]; then
     docker compose --env-file .env up -d
@@ -63,6 +64,8 @@ show_info() {
 " "$REDIS_VERSION" "localhost" "$REDIS_PORT"
   printf "Keycloak	: %s (%s:%s)
 " "$KEYCLOAK_VERSION" "localhost" "$KEYCLOAK_PORT"
+  printf "FrankenPHP\t: doc-root=%s (%s:%s)\n" "$FRANKENPHP_DOCUMENT_ROOT" "localhost" "$FRANKENPHP_HTTP_PORT"
+  printf "FrankenPHP path\t: %s\n" "$FRANKENPHP_PROJECT_PATH"
   echo ""
   echo "🧠 Running containers:"
   docker --env-file .env ps --format "table {{.Names}}	{{.Image}}	{{.Ports}}"

@@ -5,6 +5,12 @@ All notable changes to the Dockit project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- FrankenPHP service with a custom Dockerfile providing Composer, Laravel-focused PHP extensions, and AMQP support.
+- Environment variables, CLI updates, and documentation covering the FrankenPHP configuration and workflows.
+
 ## [v1.0.0] - 2025-10-25
 
 ### Added

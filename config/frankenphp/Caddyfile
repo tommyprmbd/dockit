@@ -1,0 +1,10 @@
+{
+    auto_https off
+}
+
+:80 {
+    root * /app/{$FRANKENPHP_DOCUMENT_ROOT}
+    php_server
+    file_server
+    log
+}

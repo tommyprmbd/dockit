@@ -72,3 +72,22 @@ services:
       - ./data/keycloak:/opt/keycloak/data
     networks:
       - ${NETWORK_NAME}
+
+  frankenphp:
+    build:
+      context: .
+      dockerfile: ./config/frankenphp/Dockerfile
+    container_name: frankenphp-dev
+    restart: "${RESTART_POLICY}"
+    environment:
+      FRANKENPHP_DOCUMENT_ROOT: ${FRANKENPHP_DOCUMENT_ROOT}
+      FRANKENPHP_SERVER_NAME: ${FRANKENPHP_SERVER_NAME}
+    volumes:
+      - "${FRANKENPHP_PROJECT_PATH}:/app"
+      - ./config/frankenphp/frankenphp.ini:/usr/local/etc/php/php.ini
+      - ./config/frankenphp/Caddyfile:/etc/caddy/Caddyfile
+    ports:
+      - "${FRANKENPHP_HTTP_PORT}:80"
+    command: ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
+    networks:
+      - ${NETWORK_NAME}
