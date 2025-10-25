@@ -1,0 +1,70 @@
+
+# DevEnv project .gitignore
+# Purpose: ignore local env, Docker volumes/runtime data, secrets, IDE files and build artefacts
+
+# Environment / secrets
+.env
+.env.*.local
+
+# Private keys / certificates
+*.pem
+*.key
+*.crt
+*.p12
+
+# Docker / runtime data (persisted volumes)
+/data/
+
+# Unix sockets, pids
+*.sock
+*.pid
+*.pid.lock
+
+# Logs
+*.log
+logs/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+venv/
+venv3/
+ENV/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build / distribution
+dist/
+build/
+target/
+
+# Databases
+*.sqlite3
+*.db
+*.sql
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Persist .gitkeep
+/data/.gitkeep
+
+# Keep repository config and important files tracked (explicitly not ignored):
+# - README.md, docker-compose.yml, config/ should remain tracked.
+
