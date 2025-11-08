@@ -10,7 +10,7 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 # Install PHP extensions commonly required by Laravel and RabbitMQ integrations
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends librabbitmq-dev pkg-config; \
+    apt-get install -y --no-install-recommends git librabbitmq-dev pkg-config; \
     install-php-extensions \
         bcmath \
         exif \
