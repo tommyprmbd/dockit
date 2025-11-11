@@ -9,19 +9,20 @@ every `*.caddy` file found in this directory.
 
 ## Adding a new host/project
 
-1. Pick the local project directory (`../playground/php/<project-name>`) and the
-   hostname you want to serve it on (e.g. `todo.localhost:80`).
-2. Add the necessary environment variables to `.env` **and** `.env.example`, for
-   example `TODO_APP=todo-app` and `TODO_HOST=todo.localhost:80`.
-3. Expose those variables to the container by registering them in the
-   `frankenphp` service `environment` block inside `docker-compose.yml`:
-   ```yaml
-   environment:
-     TODO_APP: ${TODO_APP}
-     TODO_HOST: ${TODO_HOST}
+1. Ensure `config/frankenphp/frankenphp.env` exists (copy
+   `frankenphp.env.example` if needed). This file is ignored by git and loaded by
+   `docker-compose` via `env_file`.
+2. Decide the project directory under `../playground/php` and the hostname you
+   want (e.g. `todo.localhost:80`), then append env vars to
+   `config/frankenphp/frankenphp.env`, for example:
+   ```sh
+   TODO_APP=todo-app
+   TODO_HOST=todo.localhost:80
    ```
-4. Create `config/frankenphp/sites/todo.caddy` (copy `default.caddy` if you
-   prefer) and adjust it to point at the project:
+   No edits to `docker-compose.yml` are required—every key in this env file is
+   available to Caddy inside the container.
+3. Create `config/frankenphp/sites/todo.caddy` (copy `default.caddy` if you
+   prefer) and point it at the new variables:
    ```caddy
    {$TODO_HOST} {
        root * /app/{$TODO_APP}/public
@@ -29,5 +30,5 @@ every `*.caddy` file found in this directory.
        file_server
    }
    ```
-5. Run `docker compose restart frankenphp` so Caddy loads the new site, and add
+4. Run `docker compose restart frankenphp` so Caddy loads the new site, and add
    the hostname to `/etc/hosts` if DNS does not already resolve it.

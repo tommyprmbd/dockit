@@ -79,11 +79,11 @@ services:
       dockerfile: ./config/frankenphp/Dockerfile
     container_name: frankenphp-dev
     restart: "${RESTART_POLICY}"
+    env_file:
+      - ./config/frankenphp/frankenphp.env
     environment:
       FRANKENPHP_DOCUMENT_ROOT: ${FRANKENPHP_DOCUMENT_ROOT}
       FRANKENPHP_SERVER_NAME: ${FRANKENPHP_SERVER_NAME}
-      FRANKENPHP_DEFAULT_APP: ${FRANKENPHP_DEFAULT_APP}
-      FRANKENPHP_DEFAULT_HOST: ${FRANKENPHP_DEFAULT_HOST}
     volumes:
       - "${FRANKENPHP_PROJECT_PATH}:/app"
       - ./config/frankenphp/frankenphp.ini:/usr/local/etc/php/php.ini
