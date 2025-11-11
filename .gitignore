@@ -65,6 +65,9 @@ Thumbs.db
 # Persist .gitkeep
 /data/.gitkeep
 
+# FrankenPHP per-project configs
+config/frankenphp/sites/*.caddy
+!config/frankenphp/sites/default.caddy
+
 # Keep repository config and important files tracked (explicitly not ignored):
 # - README.md, docker-compose.yml, config/ should remain tracked.
-

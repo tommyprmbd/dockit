@@ -1,0 +1,8 @@
+# Default catch-all FrankenPHP site. Duplicate this file per project and
+# adjust the site address/root as needed.
+{$FRANKENPHP_DEFAULT_HOST:-:80} {
+    root * /app/{$FRANKENPHP_DEFAULT_APP}/{$FRANKENPHP_DOCUMENT_ROOT}
+    php_server
+    file_server
+    log
+}

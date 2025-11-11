@@ -2,9 +2,6 @@
     auto_https off
 }
 
-:80 {
-    root * /app/{$FRANKENPHP_DOCUMENT_ROOT}
-    php_server
-    file_server
-    log
-}
+# Main FrankenPHP entry point. Each project/site lives in config/frankenphp/sites/*.caddy
+# so they can be managed independently (and selectively ignored by git).
+import ./sites/*.caddy
