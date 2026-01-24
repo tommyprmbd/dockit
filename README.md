@@ -14,6 +14,17 @@ Includes MySQL 8.2.0, PostgreSQL 15, Redis 7, Keycloak 26, and a FrankenPHP runt
 
 ---
 
+## 📚 Table of Contents
+- [📁 Folder Structure](#-folder-structure)
+- [⚙️ Setup Instructions](#️-setup-instructions)
+- [🧠 Example Workflows](#-example-workflows)
+- [🧩 FrankenPHP: Add a New Host/Project](#-frankenphp-add-a-new-hostproject)
+- [📊 Notes](#-notes)
+- [✅ Project Tasks](#-project-tasks)
+- [🧩 License](#-license)
+
+---
+
 ## 📁 Folder Structure
 ```
 dockit/
@@ -95,6 +106,39 @@ You’ll see menu options:
 
 ---
 
+## 🧩 FrankenPHP: Add a New Host/Project
+Use per-project Caddy configs in `config/frankenphp/sites/`.
+
+1. Ensure `config/frankenphp/frankenphp.env` exists (copy
+   `config/frankenphp/frankenphp.env.example` if needed). This file is ignored
+   by git and loaded by `docker-compose` via `env_file`.
+2. Choose the project directory under `../playground/php` and the hostname you
+   want (example: `todo.localhost:80`). Append env vars to
+   `config/frankenphp/frankenphp.env`, for example:
+   ```sh
+   TODO_APP=todo-app
+   TODO_HOST=todo.localhost:80
+   ```
+   No edits to `docker-compose.yml` are required—every key in this env file is
+   available to Caddy inside the container.
+3. Create `config/frankenphp/sites/todo.caddy` (copy
+   `config/frankenphp/sites/default.caddy` if you prefer) and point it at the
+   new variables:
+   ```caddy
+   {$TODO_HOST} {
+       root * /app/{$TODO_APP}/public
+       php_server
+       file_server
+   }
+   ```
+4. Restart FrankenPHP so Caddy loads the new site:
+   ```sh
+   docker compose restart frankenphp
+   ```
+5. Add the hostname to `/etc/hosts` if DNS does not already resolve it.
+
+---
+
 ## 📊 Notes
 - All ports are in the 808x range to prevent conflicts.
 - Data is persisted in Docker volumes (`mysql_data`, `postgres_data`, etc.).
@@ -112,7 +156,6 @@ Here is a summary of tasks currently being worked on for this repository:
 |---:|------|------------|:-----:|
 | 1 | Design `.gitignore` | Define patterns for files/directories to ignore (env, data volumes, certs, IDE, logs). Output: final `.gitignore` content. | completed |
 | 2 | Apply `.gitignore` to repo | Use a patch to write `/home/tommy/envdev/.gitignore` with the designed content. | completed |
-| 3 | Verification & guidance | Explain how to verify ignored files (`git status --ignored`, `git check-ignore`) and provide recommended commit commands. | not-started |
 | 4 | Update README roadmap | Add a roadmap note indicating planned additions: a message broker (RabbitMQ), an API Gateway, and a Web Service. | completed |
 | 5 | Insert todo table into README | Add a Markdown table containing the todo-list status into `README.md`. | completed |
 
