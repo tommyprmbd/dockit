@@ -10,7 +10,7 @@ v1.0.0
 
 ## 🧱 Project Overview
 Reusable local development environment built with Docker Compose.  
-Includes MySQL 8.2.0, PostgreSQL 15, Redis 7, Keycloak 26, and a FrankenPHP runtime — all managed through the `dockit.sh` interactive CLI.
+Includes MySQL 8.2.0, PostgreSQL 15, Redis 7, RabbitMQ 3 (management), Keycloak 26, and a FrankenPHP runtime — all managed through the `dockit.sh` interactive CLI.
 
 ---
 
@@ -50,8 +50,10 @@ Edit `.env` file to adjust ports or credentials:
 MYSQL_PORT=8080
 POSTGRES_PORT=8081
 REDIS_PORT=8082
-KEYCLOAK_PORT=8083
-FRANKENPHP_HTTP_PORT=8084
+RABBITMQ_PORT=8083
+RABBITMQ_MANAGEMENT_PORT=8084
+KEYCLOAK_PORT=8085
+FRANKENPHP_HTTP_PORT=8086
 FRANKENPHP_PROJECT_PATH=../playground/php
 FRANKENPHP_DOCUMENT_ROOT=public
 ```
@@ -84,9 +86,9 @@ You’ll see menu options:
 ./dockit.sh → option 2 → all
 ```
 
-**Start only MySQL & Redis:**
+**Start only MySQL, Redis, and RabbitMQ:**
 ```bash
-./dockit.sh → option 2 → mysql redis
+./dockit.sh → option 2 → mysql redis rabbitmq
 ```
 
 **Serve a PHP app with FrankenPHP:**
@@ -97,6 +99,11 @@ You’ll see menu options:
 **View container logs:**
 ```bash
 ./dockit.sh → option 5 → mysql-dev
+```
+
+**Open RabbitMQ management UI:**
+```text
+http://localhost:${RABBITMQ_MANAGEMENT_PORT}
 ```
 
 **Stop everything:**
@@ -141,7 +148,7 @@ Use per-project Caddy configs in `config/frankenphp/sites/`.
 
 ## 📊 Notes
 - All ports are in the 808x range to prevent conflicts.
-- Data is persisted in Docker volumes (`mysql_data`, `postgres_data`, etc.).
+- Data is persisted in host-mounted folders under `./data/`.
 - FrankenPHP mounts your application from `FRANKENPHP_PROJECT_PATH` and uses `FRANKENPHP_DOCUMENT_ROOT` for serving public files.
 - Each service is isolated under the `devnet` network.
 - You can safely extend this setup with additional services like **Mailpit**, **Adminer**, or **MinIO**.

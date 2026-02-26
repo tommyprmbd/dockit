@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - FrankenPHP service with a custom Dockerfile providing Composer, Laravel-focused PHP extensions, and AMQP support.
 - Environment variables, CLI updates, and documentation covering the FrankenPHP configuration and workflows.
+- RabbitMQ service (`rabbitmq:3-management-alpine`) with AMQP and management ports, persistent data path, `.env` variables, and README/CLI integration.
 
 ## [v1.0.0] - 2025-10-25
 

@@ -50,6 +50,21 @@ services:
     networks:
       - ${NETWORK_NAME}
 
+  rabbitmq:
+    image: rabbitmq:${RABBITMQ_VERSION}
+    container_name: rabbitmq-dev
+    restart: "${RESTART_POLICY}"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    ports:
+      - "${RABBITMQ_PORT}:5672"
+      - "${RABBITMQ_MANAGEMENT_PORT}:15672"
+    volumes:
+      - ./data/rabbitmq:/var/lib/rabbitmq
+    networks:
+      - ${NETWORK_NAME}
+
   keycloak:
     image: keycloak/keycloak:${KEYCLOAK_VERSION}
     container_name: keycloak-dev
