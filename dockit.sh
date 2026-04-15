@@ -36,7 +36,7 @@ build_containers() {
 }
 
 start_containers() {
-  echo "Available services: mysql postgres redis rabbitmq keycloak frankenphp"
+  echo "Available services: mysql postgres redis rabbitmq keycloak sonarqube frankenphp"
   read -p "Enter service(s) to start (space-separated or 'all'): " SERVICES
   if [ "$SERVICES" == "all" ]; then
     docker compose --env-file .env up -d
@@ -66,6 +66,8 @@ show_info() {
 " "$RABBITMQ_VERSION" "localhost" "$RABBITMQ_PORT" "localhost" "$RABBITMQ_MANAGEMENT_PORT"
   printf "Keycloak	: %s (%s:%s)
 " "$KEYCLOAK_VERSION" "localhost" "$KEYCLOAK_PORT"
+  printf "SonarQube	: %s (%s:%s)
+" "$SONARQUBE_VERSION" "localhost" "$SONARQUBE_PORT"
   printf "FrankenPHP\t: doc-root=%s (%s:%s)\n" "$FRANKENPHP_DOCUMENT_ROOT" "localhost" "$FRANKENPHP_HTTP_PORT"
   printf "FrankenPHP path\t: %s\n" "$FRANKENPHP_PROJECT_PATH"
   echo ""
