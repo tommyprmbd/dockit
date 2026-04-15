@@ -2,6 +2,15 @@
 
 > A unified local development stack for modern backend developers.
 
+![Docker Compose](https://img.shields.io/badge/Docker%20Compose-local%20stack-2496ED?logo=docker&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8.2.0-4479A1?logo=mysql&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white)
+![RabbitMQ](https://img.shields.io/badge/RabbitMQ-3-FF6600?logo=rabbitmq&logoColor=white)
+![Keycloak](https://img.shields.io/badge/Keycloak-26-4D4D4D?logo=keycloak&logoColor=white)
+![SonarQube](https://img.shields.io/badge/SonarQube-community-4E9BCD?logo=sonarqube&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-FrankenPHP-777BB4?logo=php&logoColor=white)
+
 ## 📘 Version
 v1.0.0
 
@@ -10,7 +19,7 @@ v1.0.0
 
 ## 🧱 Project Overview
 Reusable local development environment built with Docker Compose.  
-Includes MySQL 8.2.0, PostgreSQL 15, Redis 7, RabbitMQ 3 (management), Keycloak 26, and a FrankenPHP runtime — all managed through the `dockit.sh` interactive CLI.
+Includes MySQL 8.2.0, PostgreSQL 15, Redis 7, RabbitMQ 3 (management), Keycloak 26, SonarQube, and a FrankenPHP runtime — all managed through the `dockit.sh` interactive CLI.
 
 ---
 
@@ -18,6 +27,7 @@ Includes MySQL 8.2.0, PostgreSQL 15, Redis 7, RabbitMQ 3 (management), Keycloak 
 - [📁 Folder Structure](#-folder-structure)
 - [⚙️ Setup Instructions](#️-setup-instructions)
 - [🧠 Example Workflows](#-example-workflows)
+- [🔍 SonarQube](#-sonarqube)
 - [🧩 FrankenPHP: Add a New Host/Project](#-frankenphp-add-a-new-hostproject)
 - [📊 Notes](#-notes)
 - [✅ Project Tasks](#-project-tasks)
@@ -53,6 +63,7 @@ REDIS_PORT=8082
 RABBITMQ_PORT=8083
 RABBITMQ_MANAGEMENT_PORT=8084
 KEYCLOAK_PORT=8085
+SONARQUBE_PORT=8088
 FRANKENPHP_HTTP_PORT=8086
 FRANKENPHP_PROJECT_PATH=../playground/php
 FRANKENPHP_DOCUMENT_ROOT=public
@@ -113,6 +124,33 @@ http://localhost:${RABBITMQ_MANAGEMENT_PORT}
 
 ---
 
+## 🔍 SonarQube
+
+**Start SonarQube:**
+```bash
+./dockit.sh → option 2 → sonarqube
+```
+
+**Open the UI:**
+```text
+http://localhost:${SONARQUBE_PORT}
+```
+
+**Default login:**
+- Username: `admin`
+- Password: `admin` (you’ll be prompted to change it on first login)
+
+**Run a scan (no local install):**
+```bash
+docker run --rm --network ${NETWORK_NAME} \
+  -e SONAR_HOST_URL=http://sonarqube:9000 \
+  -e SONAR_TOKEN="<token>" \
+  -v "$PWD:/usr/src" \
+  sonarsource/sonar-scanner-cli
+```
+
+---
+
 ## 🧩 FrankenPHP: Add a New Host/Project
 Use per-project Caddy configs in `config/frankenphp/sites/`.
 
@@ -151,6 +189,7 @@ Use per-project Caddy configs in `config/frankenphp/sites/`.
 - Data is persisted in host-mounted folders under `./data/`.
 - FrankenPHP mounts your application from `FRANKENPHP_PROJECT_PATH` and uses `FRANKENPHP_DOCUMENT_ROOT` for serving public files.
 - Each service is isolated under the `devnet` network.
+- On Linux hosts, SonarQube may require a higher `vm.max_map_count` for Elasticsearch (common fix: `sudo sysctl -w vm.max_map_count=262144`).
 - You can safely extend this setup with additional services like **Mailpit**, **Adminer**, or **MinIO**.
 
 ---
